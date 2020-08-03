@@ -35,6 +35,8 @@ Thus, a grand total of 3976613 + 3328051 = 7304664 indexes with undetermined bas
         The output will be 52 FASTQ files. Half of these will be forward, and half reverse. So, for each half, there will be 26 files, and 24, related to the 24 indexes, of these files will be where reads that matched in an index-pair will go. Another file will contain reads where index-hopping occurred, and the last file will be where reads with low quality or unknown indexes reside. For both forward and reverse files with correct index pair matching, appended to the header will be the sequence of the indexes. Along with the files being output, there will also be information output which will tell how many read-pairs were properly matched (for each of the 24 indexes), how many times index-hopping occurred, and how many indexes were unknown or had low quality; this will likely be output in a text file.
 3. Upload your [4 input FASTQ files](../TEST-input_FASTQ) and your [4 expected output FASTQ files](../TEST-output_FASTQ).
 4. Pseudocode
+
+```
 Start with a shebang, specifying where to find the version of Python to use.
 
 Next, we will import argparse, itertools, and numpy
@@ -78,7 +80,7 @@ def main_function(read1,read2,read3,read4):           this will be renamed to so
                 If the above is true, then still append index-index, but write them to  unk_lowqf and unk_lowqr instead of the above files.
     Close all of the files.
     return the files, as well as the number keys and values of the permut_dict
-
+```
 
 5. High level functions. For each function, be sure to include:
     1. Description/doc string
