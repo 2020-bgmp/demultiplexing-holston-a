@@ -17,9 +17,10 @@
     ![R4](https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R4_mean_qual_base_pos.png)
     
     2. ```A quality score of 30 would be a good cutoff, because for a quality score of 30 it means it is 99.9% probability of it being correct (one in one thousand chance of an incorrect base call). Per the graphs of the mean quality score per base position, for each read and index each positions averages at least 30, thus if the read is below average quality, it would be cut off.```
-    3. ```Command used: ls -1 /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R[23]_001.fastq.gz | while read FASTQ; do echo $FASTQ; zcat $FASTQ | sed -n "2~4p" | grep "N" | wc -l; done
-    
-    Output obtained:
+    3. ```Command used: ls -1 /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R[23]_001.fastq.gz | while read FASTQ; do echo $FASTQ; zcat $FASTQ | sed -n "2~4p" | grep "N" | wc -l; done```
+
+```
+Output obtained:
 /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz
 3976613
 /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz
