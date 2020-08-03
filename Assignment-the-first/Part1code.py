@@ -2,6 +2,7 @@
 
 
 import argparse
+import gzip
 from matplotlib import pyplot as plt
 
 def get_args():
@@ -40,7 +41,7 @@ def populate_list(file):
     """
     EmptyList = []
     mean_scores = init_list(EmptyList)
-    with open(file, "r") as fh:
+    with gzip.open(file, "rt") as fh:
         LN = 0
         for line in fh:
             LN+=1
@@ -63,7 +64,7 @@ def calculate_mean(file):
     mean_scores = init_list(EmptyList)
     EmptyList1 = []
     Mean_scores = init_list(EmptyList1)
-    with open(file, "r") as fh:
+    with gzip.open(file, "rt") as fh:
         LN = 0
         for line in fh:
             LN+=1
