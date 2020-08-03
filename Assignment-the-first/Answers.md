@@ -5,18 +5,27 @@
 
 | File name | label |
 |---|---|
-| 1294_S1_L008_R1_001.fastq.gz |  |
-| 1294_S1_L008_R2_001.fastq.gz |  |
-| 1294_S1_L008_R3_001.fastq.gz |  |
-| 1294_S1_L008_R4_001.fastq.gz |  |
+| 1294_S1_L008_R1_001.fastq.gz | Read 1 |
+| 1294_S1_L008_R2_001.fastq.gz | Index 1 |
+| 1294_S1_L008_R3_001.fastq.gz | Index 2 |
+| 1294_S1_L008_R4_001.fastq.gz | Read 2 |
 
 2. Per-base NT distribution
-    1. [R1]
-    [R2]
-    [R3]
-    [R4]
-    2. ```Your answer here```
-    3. ```Your answer here```
+    1. ![R1](https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R1_mean_qual_base_pos.png)
+    ![R2](https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R2_mean_qual_base_pos.png)
+    ![R3](https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R3_mean_qual_base_pos.png)
+    ![R4](https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R4_mean_qual_base_pos.png)
+    
+    2. ```A quality score of 30 would be a good cutoff, because for a quality score of 30 it means it is 99.9% probability of it being correct (one in one thousand chance of an incorrect base call). Per the graphs of the mean quality score per base position, for each read and index each positions averages at least 30, thus if the read is below average quality, it would be cut off.```
+    3. ```Command used: ls -1 /projects/bgmp/shared/2017_sequencing/1294_S1_L008_R[23]_001.fastq.gz | while read FASTQ; do echo $FASTQ; zcat $FASTQ | sed -n "2~4p" | grep "N" | wc -l; done
+    
+    Output obtained:
+/projects/bgmp/shared/2017_sequencing/1294_S1_L008_R2_001.fastq.gz
+3976613
+/projects/bgmp/shared/2017_sequencing/1294_S1_L008_R3_001.fastq.gz
+3328051
+Thus, a grand total of 3976613 + 3328051 = 7304664 indexes with undetermined base calls.
+```
     
 ## Part 2
 1. Define the problem
@@ -75,10 +84,5 @@ def main_function(read1,read2,read3,read4):           this will be renamed to so
     2. Function headers (name and parameters)
     3. Test examples for individual functions
     4. Return statement
-
-[R1]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R1_mean_qual_base_pos.png
-[R2]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R2_mean_qual_base_pos.png
-[R3]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R3_mean_qual_base_pos.png
-[R4]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R4_mean_qual_base_pos.png
 
 
