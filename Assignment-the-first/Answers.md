@@ -11,7 +11,10 @@
 | 1294_S1_L008_R4_001.fastq.gz |  |
 
 2. Per-base NT distribution
-    1. Use markdown to insert your 4 histograms here.
+    1. [R1]
+    [R2]
+    [R3]
+    [R4]
     2. ```Your answer here```
     3. ```Your answer here```
     
@@ -73,5 +76,9 @@ def main_function(read1,read2,read3,read4):           this will be renamed to so
     3. Test examples for individual functions
     4. Return statement
 
+[R1]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R1_mean_qual_base_pos.png
+[R2]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R2_mean_qual_base_pos.png
+[R3]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R3_mean_qual_base_pos.png
+[R4]: https://raw.githubusercontent.com/2020-bgmp/demultiplexing-holston-a/master/Assignment-the-first/R4_mean_qual_base_pos.png
 
 
