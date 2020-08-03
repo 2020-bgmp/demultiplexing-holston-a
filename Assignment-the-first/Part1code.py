@@ -2,7 +2,6 @@
 
 
 import argparse
-import itertools
 from matplotlib import pyplot as plt
 
 def get_args():
