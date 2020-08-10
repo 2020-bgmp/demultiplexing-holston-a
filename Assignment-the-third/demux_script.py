@@ -47,11 +47,13 @@ def rev_comp_maker(indexlist):
     """Given an index list, return a dictionary where the key is the index, and the value is the reverse complement of said index"""
     rev_comp_dict = {}
     indexesfwdback = list(indexlist)
+    rev_indexes = []
     for i in range(len(indexlist)):
         rc = rev_comp(indexlist[i])
         rev_comp_dict[indexlist[i]] = rc                           #Generate a dictionary where the key is the index, and the value is the reverse complement of the index.
         indexesfwdback.append(rc)                                  #Make a list contains both the indexes and the reverse complement of the indexes.
-    return rev_comp_dict, indexesfwdback
+        rev_indexes.append(rc)
+    return rev_comp_dict, indexesfwdback, rev_indexes
 
 def convert_phred(letter):
     """Converts a single character into a phred score"""
@@ -117,7 +119,7 @@ def close_written_files(file_list):
 def main_demultiplexing(read1,read2,index1,index2,indexfile):
     """Calls the output of other functions, demultiplexes the records, and all. Also tracks of index-hoppings, correctly paired, and low quality/unknown indexes."""
     indexlist = get_indexlist(indexfile)
-    rev_comp_dict, indexesfwdback = rev_comp_maker(indexlist)     #POUHSLDGFJKDSF GONNA NEED TO CHANGE THIS, CUZ I'm CHANGING IT UP ABOVE!!! ! ! ! ! ! 
+    rev_comp_dict, indexesfwdback, rev_indexes = rev_comp_maker(indexlist)     #POUHSLDGFJKDSF GONNA NEED TO CHANGE THIS, CUZ I'm CHANGING IT UP ABOVE!!! ! ! ! ! ! 
     permut_dict = possible_perms(indexlist)
     file_list = open_write_files(indexlist)                     #Open all of our files to which we'll write.
     with gzip.open(read1, "rt") as r1f, gzip.open(index1, "rt") as i1f, gzip.open(index2, "rt") as i2f, gzip.open(read2, "rt") as r2f:
@@ -160,10 +162,21 @@ def main_demultiplexing(read1,read2,index1,index2,indexfile):
                         file_list[named_file1].writelines(RecordHolder[0])                   #And write the read1 record to the appropriate file.
                         named_file2 = i1 + '_Read2.fastq'                                       #Similarly, we find the file name for the second one,
                         file_list[named_file2].writelines(RecordHolder[3])                   #And write to that file.
-                    elif avg_qscore(i1qual) >= 30 and avg_qscore(i2qual) >= 30:
+                    elif i2 in rev_indexes and avg_qscore(i1qual) >= 30 and avg_qscore(i2qual) >= 30:               #This will only grab index swapping where it is swapped in the normal direction.
                         i1str = str(i1)
                         i2rc = str(rev_comp(i2))                                                  #Now we get the reverse complement of the 2nd index, so we have what would initially be its forward sequence
                         permut_dict[(i1str,i2rc)]+= 1                                           #And increment its specific counter
+                        permut_dict['Index_hopped']+= 1                                        #And increment its generic counter
+                        permut_dict['Total']+= 1
+                        for i in range(len(RecordHolder[3])):                                #Iterate through the lines of the record, because as we are no longer manipulating the information, we can now...
+                            RecordHolder[3][i] = RecordHolder[3][i] +'\n'                    #...add newlines to the lines so we can write the records to a file
+                            RecordHolder[0][i] = RecordHolder[0][i] +'\n'
+                        file_list['indexhopped_Read1.fastq'].writelines(RecordHolder[0])     #Then we write the records to the files
+                        file_list['indexhopped_Read2.fastq'].writelines(RecordHolder[3])
+                    elif avg_qscore(i1qual) >= 30 and avg_qscore(i2qual) >= 30:                                 #This will catch index hopping where the second index is reversed.
+                        i1str = str(i1)
+                        i2str = str(i2)                                                  #Now we get the reverse complement of the 2nd index, so we have what would initially be its forward sequence
+                        permut_dict[(i1str,i2str)]+= 1                                           #And increment its specific counter
                         permut_dict['Index_hopped']+= 1                                        #And increment its generic counter
                         permut_dict['Total']+= 1
                         for i in range(len(RecordHolder[3])):                                #Iterate through the lines of the record, because as we are no longer manipulating the information, we can now...
