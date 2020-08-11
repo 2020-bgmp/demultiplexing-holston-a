@@ -1,4 +1,4 @@
-#Final output (nicely labeled)
+# Final output (nicely labeled)
 
 
 | Entity   or pair of indices | Times encountered | Percent of Total |
@@ -579,7 +579,7 @@
 | GATCTTGC', 'GATCTTGC'       | 3425453           | 0.94301%         |
 | AGAGTCCA', 'AGAGTCCA'       | 10378366          | 2.85711%         |
 | AGGATAGC', 'AGGATAGC'       | 8078058           | 2.22385%         |
-| ###Unknown/Low quality scores  | 57748560          | 15.89789%        |
+| **Unknown/Low quality scores  | 57748560          | 15.89789%        |
 | ###Index hopped                | 517905            | 0.14258%         |
 | ###Correctly matched           | 304980270         | 83.95954%        |
 | ###Total                       | 363246735         | 100%             |
